@@ -12,7 +12,7 @@ type Config struct {
 	IdleTimeout     time.Duration
 	ShutdownTimeout time.Duration
 	Env             string
-	JWTSecret       string
+	RabbitMQURL     string
 }
 
 type DBConfig struct {
@@ -32,7 +32,7 @@ func LoadConfig() *Config {
 		IdleTimeout:     120 * time.Second,
 		ShutdownTimeout: 10 * time.Second,
 		Env:             getEnv("ENV", "development"),
-		JWTSecret:       getEnv("JWT_SECRET", ""),
+		RabbitMQURL:     getEnv("RABBITMQ_URL", ""),
 	}
 }
 

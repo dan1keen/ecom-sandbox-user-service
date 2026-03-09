@@ -31,5 +31,4 @@ func registerHealthRoutes(r *gin.Engine) {
 
 func registerApplicationRoutes(r *gin.Engine, container *app.Container) {
 	r.GET("/profile", container.UserHandler().GetProfile())
-	r.POST("/login", container.AuthHandler().Login())
 }

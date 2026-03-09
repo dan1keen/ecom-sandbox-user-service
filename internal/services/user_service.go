@@ -3,13 +3,9 @@ package services
 import (
 	"context"
 	"fmt"
-	"user-service/internal/models"
+	"user-service/internal/infrastructure/db/models"
 	"user-service/internal/repositories"
 )
-
-type UserService interface {
-	GetUserById(ctx context.Context, id int) (*models.User, error)
-}
 
 type userService struct {
 	userRepo repositories.UserRepository

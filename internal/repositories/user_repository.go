@@ -3,15 +3,10 @@ package repositories
 import (
 	"context"
 	"time"
-	"user-service/internal/models"
+	"user-service/internal/infrastructure/db/models"
 
 	"gorm.io/gorm"
 )
-
-type UserRepository interface {
-	GetByID(ctx context.Context, id int) (*models.User, error)
-	GetByPhone(ctx context.Context, phone string) (*models.User, error)
-}
 
 type userRepository struct {
 	db *gorm.DB

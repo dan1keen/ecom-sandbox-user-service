@@ -1,4 +1,4 @@
-package server
+package bootstrap
 
 import (
 	"context"
@@ -26,11 +26,11 @@ func NewHTTPServer(router *gin.Engine, port string, readTimeout, writeTimeout, i
 	}
 }
 
-func StartServer(srv *http.Server, cfg *config.Config) {
+func StartHTTPServer(srv *http.Server, cfg *config.Config) {
 	go func() {
 		log.Printf("Server running on port %s (%s mode)", cfg.Port, cfg.Env)
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Fatalf("Could not start server: %v", err)
+			log.Fatalf("Could not start bootstrap: %v", err)
 		}
 	}()
 }

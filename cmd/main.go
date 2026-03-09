@@ -1,12 +1,12 @@
 package main
 
 import (
-	"user-service/db"
-	"user-service/internal/app"
-
 	"user-service/config"
+	"user-service/internal/app"
+	"user-service/internal/bootstrap"
 	internalHttp "user-service/internal/http"
-	"user-service/server"
+	"user-service/internal/infrastructure/db"
+	"user-service/internal/infrastructure/rabbitmq"
 )
 
 func main() {
@@ -14,14 +14,19 @@ func main() {
 
 	database := db.GetPostgresDB()
 
-	container := app.NewContainer(cfg, database)
+	rmq := rabbitmq.NewRabbitMQ(cfg.RabbitMQURL)
+	defer rmq.Close()
+
+	container := app.NewContainer(database)
+
+	bootstrap.StartConsumers(rmq, container)
 
 	router := internalHttp.SetupRouter(cfg, container)
 
-	srv := server.NewHTTPServer(router, cfg.Port, cfg.ReadTimeout, cfg.WriteTimeout, cfg.IdleTimeout)
+	srv := bootstrap.NewHTTPServer(router, cfg.Port, cfg.ReadTimeout, cfg.WriteTimeout, cfg.IdleTimeout)
 
-	server.StartServer(srv, cfg)
+	bootstrap.StartHTTPServer(srv, cfg)
 
 	// --- Graceful shutdown ---
-	server.WaitForShutdown(srv, cfg)
+	bootstrap.WaitForShutdown(srv, cfg)
 }
