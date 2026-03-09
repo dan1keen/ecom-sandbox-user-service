@@ -1,9 +1,9 @@
 package main
 
 import (
-	"user-service/config"
 	"user-service/internal/app"
 	"user-service/internal/bootstrap"
+	"user-service/internal/config"
 	internalHttp "user-service/internal/http"
 	"user-service/internal/infrastructure/db"
 	"user-service/internal/infrastructure/rabbitmq"

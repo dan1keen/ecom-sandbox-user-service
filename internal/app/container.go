@@ -2,7 +2,6 @@ package app
 
 import (
 	"user-service/internal/http/handlers"
-	"user-service/internal/queue/consumers"
 	"user-service/internal/repositories"
 	"user-service/internal/services"
 
@@ -13,9 +12,8 @@ import (
 type Container struct {
 	db *gorm.DB
 
-	userService  services.UserService
-	userHandler  *handlers.UserHandler
-	userConsumer *consumers.UserConsumer
+	userService services.UserService
+	userHandler *handlers.UserHandler
 }
 
 // NewContainer создаёт все зависимости
@@ -29,19 +27,14 @@ func NewContainer(db *gorm.DB) (c *Container) {
 		repositories.NewUserRepository(db),
 	)
 
-	//consumers
+	//handlers
 	c.userHandler = handlers.NewUserHandler(c.userService)
-	c.userConsumer = consumers.NewUserConsumer(c.userService)
 
 	return c
 }
 
 func (c *Container) UserHandler() *handlers.UserHandler {
 	return c.userHandler
-}
-
-func (c *Container) UserConsumer() *consumers.UserConsumer {
-	return c.userConsumer
 }
 
 func (c *Container) UserService() services.UserService {

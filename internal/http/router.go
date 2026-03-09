@@ -3,8 +3,7 @@ package http
 import (
 	"net/http"
 	"user-service/internal/app"
-
-	"user-service/config"
+	"user-service/internal/config"
 
 	"github.com/gin-gonic/gin"
 )

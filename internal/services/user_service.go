@@ -2,7 +2,9 @@ package services
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"log"
 	"user-service/internal/infrastructure/db/models"
 	"user-service/internal/repositories"
 )
@@ -24,4 +26,16 @@ func (us *userService) GetUserById(ctx context.Context, id int) (user *models.Us
 	}
 
 	return
+}
+
+func (us *userService) UserCreated(ctx context.Context, data []byte) error {
+	var event map[string]interface{}
+	if err := json.Unmarshal(data, &event); err != nil {
+		return err
+	}
+
+	log.Println("Received user.created event:", event)
+	// TODO: create user func
+
+	return nil
 }

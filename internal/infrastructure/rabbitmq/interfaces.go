@@ -1,4 +1,4 @@
-package queue
+package rabbitmq
 
 type Publisher interface {
 	Publish(queue string, message interface{}) error

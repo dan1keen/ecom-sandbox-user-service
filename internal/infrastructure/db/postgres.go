@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"sync"
-	"user-service/config"
+	"user-service/internal/config"
 
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"

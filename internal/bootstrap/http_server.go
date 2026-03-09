@@ -9,7 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-	"user-service/config"
+	"user-service/internal/config"
 
 	"github.com/gin-gonic/gin"
 )
